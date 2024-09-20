@@ -1,0 +1,1 @@
+{"database":{"rules":"database.rules.json"},"firestore":{"rules":"firestore.rules","indexes":"firestore.indexes.json"},"storage":{"rules":"storage.rules"},"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"fashion-lookbook-creator","configurations":{"web":"1:1071535827534:web:3115c1f1f837a7ff99b11f"}}}}}}
