@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:html' as html;
 import 'package:logbook/data/product_model.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:video_player/video_player.dart';
@@ -25,7 +26,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       appBar: AppBar(
         title: Text(widget.product.name),
         elevation: 0,
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.lightBlueAccent,
       ),
       body: Stack(
         children: [
@@ -34,7 +35,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Colors.teal.shade50, Colors.white],
+                colors: [Colors.white, Colors.lightBlueAccent],
               ),
             ),
             child: Row(
@@ -49,11 +50,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         children: [
                           Text(
                             widget.product.name,
-                            style:
-                                Theme.of(context).textTheme.headline4?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.teal.shade700,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.teal.shade700,
+                                ),
                           ),
                           SizedBox(height: 24),
                           Card(
@@ -70,10 +73,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     'Description:',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline6
+                                        .headlineMedium
                                         ?.copyWith(
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.teal.shade600,
+                                          color: Colors.blue.shade600,
                                         ),
                                   ),
                                   SizedBox(height: 16),
@@ -81,7 +84,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     widget.product.description,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodySmall
                                         ?.copyWith(
                                           color: Colors.grey.shade700,
                                         ),
@@ -93,11 +96,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           SizedBox(height: 24),
                           Text(
                             'Hashtags:',
-                            style:
-                                Theme.of(context).textTheme.headline6?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.teal.shade600,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.teal.shade600,
+                                ),
                           ),
                           SizedBox(height: 16),
                           Wrap(
@@ -114,6 +119,36 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       shadowColor: Colors.teal.withOpacity(0.3),
                                     ))
                                 .toList(),
+                          ),
+                          SizedBox(height: 24),
+                          Text(
+                            'Where to Buy:',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.teal.shade600,
+                                ),
+                          ),
+                          Column(
+                            children: List.generate(
+                              widget.product.buyingLinks.length,
+                              (index) => MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _openLink(
+                                        widget.product.buyingLinks[index]);
+                                  },
+                                  child: Text(
+                                    widget.product.buyingLinks[index],
+                                    style:
+                                        TextStyle(color: Colors.blue.shade700),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -155,6 +190,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
       bottomNavigationBar: _buildMediaSelector(),
     );
+  }
+
+  _openLink(String url) async {
+    html.window.open(url, '_blank');
   }
 
   Widget _buildMediaWidget() {
@@ -239,6 +278,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   fit: StackFit.expand,
                   children: [
                     Image.network(
+                      errorBuilder: (context, error, stackTrace) {
+                        return Icon(Icons.image_not_supported_sharp, color: Colors.blue,);
+                        
+                      },
                       isVideo ? media['thumbnail_url'] : media['file_url'],
                       fit: BoxFit.cover,
                     ),

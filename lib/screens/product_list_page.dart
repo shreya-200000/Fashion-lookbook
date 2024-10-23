@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:logbook/data/product_model.dart';
-import 'package:logbook/data/temp.dart';
 import 'package:logbook/screens/products_page.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
@@ -23,15 +23,35 @@ class _ProductListPageState extends State<ProductListPage> {
   }
 
   _fetchData() async {
-    final List<Product> loadedProducts = productsData.map((productData) {
-      return Product(
-        id: productData['id']?.toString() ?? '',
-        name: productData['title']?.toString() ?? '',
-        description: productData['description']?.toString() ?? '',
-        tags: (productData['hashtags'] as List<dynamic>?)?.cast<String>() ?? [],
-        media: (productData['media'] as List<dynamic>?)?.toList() ?? [],
-      );
-    }).toList();
+    final snapshot =
+        await FirebaseFirestore.instance.collection('fashionItems').get();
+
+    final loadedProducts = await Future.wait(
+      snapshot.docs.map(
+        (doc) async {
+          final data = doc.data();
+
+          final mediaSnapshot = await FirebaseFirestore.instance
+              .collection('fashionItems')
+              .doc(doc.id)
+              .collection('media')
+              .get();
+          final media = mediaSnapshot.docs.toList();
+          return Product(
+              buyingLinks: data['ecom_link'],
+              id: doc.id,
+              name: data['title'] ?? '',
+              description: data['description'] ?? '',
+              tags: data["hashtags"],
+              media: media.map((mediaDoc) {
+                final mediaData = mediaDoc.data();
+                return mediaData;
+              }).toList(),
+               reviews: []);
+        },
+      ),
+      
+    );
 
     setState(() {
       products = loadedProducts;

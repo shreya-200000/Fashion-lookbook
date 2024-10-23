@@ -53,13 +53,13 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCjuAs1T4nlJ5tsAycWbxHnG1R9OaO2qU0',
-    appId: '1:1071535827534:web:3115c1f1f837a7ff99b11f',
-    messagingSenderId: '1071535827534',
-    projectId: 'fashion-lookbook-creator',
-    authDomain: 'fashion-lookbook-creator.firebaseapp.com',
-    databaseURL: 'https://fashion-lookbook-creator-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'fashion-lookbook-creator.appspot.com',
-    measurementId: 'G-QX7BM12EHQ',
+    apiKey: 'AIzaSyCIfpGJQnrSOxdPhT2UES-IQiiPcdtaYbY',
+    appId: '1:799817114314:web:5ae02b6aff45fdeeee4a33',
+    messagingSenderId: '799817114314',
+    projectId: 'fashion-2e6ca',
+    authDomain: 'fashion-2e6ca.firebaseapp.com',
+    databaseURL: 'https://fashion-2e6ca-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'fashion-2e6ca.appspot.com',
+    measurementId: 'G-KLT34CW40L',
   );
 }

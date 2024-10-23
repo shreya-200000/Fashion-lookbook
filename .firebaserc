@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "fashion-lookbook-creator"
-  }
+    "main": "fashion-2e6ca",
+    "default": "fashion-2e6ca"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }
